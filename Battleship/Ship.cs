@@ -13,4 +13,14 @@ public class Ship
         Coordinates = new int[length,2];
     }
 
+
+    public void SetShipCoordinates(int xCoord, int yCoord)
+    {
+        for (int actualPart = 0; actualPart < (int)this.Type; actualPart++)
+        {
+            Coordinates[0 + actualPart, 0] = xCoord;
+            Coordinates[0 + actualPart, 1] = yCoord;
+        }
+    }
+
 }
