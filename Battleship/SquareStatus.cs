@@ -5,5 +5,6 @@ public enum SquareStatus
     Ocean,
     Hit,
     Sank,
-    Miss
+    Miss,
+    Ship
 }
