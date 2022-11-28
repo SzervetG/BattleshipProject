@@ -3,8 +3,8 @@
 public enum ShipType
 {
     SpeedBoat = 1,
-    Destroyer = 2,
-    Cruiser = 3,
-    BattleShip = 4,
-    Carrier = 5
+    Cruiser = 2,
+    Destroyer = 3,
+    Carrier = 4,
+    BattleShip = 5
 }
