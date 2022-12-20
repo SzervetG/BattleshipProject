@@ -24,13 +24,20 @@ public class Board
     }
 
 
-    public void PlaceShipToSquare((int, int) startIndex, string direction, int shipLength)
+    public void PlaceShipToSquare(Ship ship, (int, int) startIndex, string direction, int shipLength)
     {
         for (int shipPart = 0; shipPart < shipLength; shipPart++)
         {
             if (direction.ToLower() == "h")
+            {
                 PlayerBoard[startIndex.Item1, startIndex.Item2 + shipPart].ChangeStatus(SquareStatus.Ship);
-            PlayerBoard[startIndex.Item1 + shipPart, startIndex.Item2].ChangeStatus(SquareStatus.Ship);
+                ship.SetShipCoordinates(startIndex.Item1, startIndex.Item2 + shipPart);
+            }
+            else
+            {
+                PlayerBoard[startIndex.Item1 + shipPart, startIndex.Item2].ChangeStatus(SquareStatus.Ship);
+                ship.SetShipCoordinates(startIndex.Item1 + shipPart, startIndex.Item2);
+            }
         }
         
     }

@@ -2,11 +2,17 @@
 
 public class Display
 {
+    public void Clear()
+    {
+        Console.Clear();
+    }
+    
+    
     public void WelcomeMessage()
     {
-        string message = "Greetings Player(s)! Welcome to the famous BattleShip game!" +
-                                "\n\nHow many of you want to play?" +
-                                "\n(Please type a number from 1 to 2)";
+        string message = "Greetings Player(s)! Welcome to the famous BattleShip game!"; 
+                        // +"\n\nHow many of you want to play?";
+                        // "\n(Please type a number from 1 to 2)";
         
         Console.WriteLine(message);
     }
@@ -14,7 +20,7 @@ public class Display
 
     public void GetName(int playerNum)
     {
-        string message = $"Player{playerNum}, what is Your name?";
+        string message = $"Player {playerNum + 1}, what is Your name?";
         Console.WriteLine(message);
     }
 
@@ -29,7 +35,7 @@ public class Display
 
         int greetNum = RandomGreeter();
         
-        Console.WriteLine(greetings[greetNum+1]);
+        Console.WriteLine(greetings[greetNum-1]);
     }
 
 
@@ -44,72 +50,67 @@ public class Display
 
     public void GetBoardSize()
     {
-        string message = "What size of board would you play on?";
-        Console.WriteLine(message);
-    }
-
-
-    public void PlaceThem()
-    {
-        string message = "Now comes the placement. Please follow the instructions below!";
+        string message = "What size of board would you play on?" + 
+                         "\nPlease type a number between 5 and 10";
         Console.WriteLine(message);
     }
 
 
     public void PlacementInstructions()
     {
-        string message = "Instructions:\n\n1: Ships can be placed horizontally or vertically within your board." +
-                         "\n\n2: If you place horizontally, you will be able to choose the leftmost coordinate of the ship" +
+        string message = "Now comes the placement. Please follow the instructions below!" + 
+                         "\n\nInstructions:\n\n1: Ships can be placed horizontally or vertically within your board." +
+                         "\n2: If you place horizontally, you will be able to choose the leftmost coordinate of the ship" +
                          " and it will be automatically placed to the right." +
-                         "\nIf vertically, you will be able to choose the top coordinate" +
+                         "\n    If vertically, you will be able to choose the top coordinate" +
                          " and it will be automatically placed downwards." +
-                         "\nFirs you will be asked for a first coordinate and then the direction." +
-                         "\n\n3: Each ship has different size what will be displayed when you place that ship." +
-                         "\n\n4: Choose wisely...";
+                         "\n3: First you will be asked for a first coordinate and then the direction." +
+                         "\n4: Each ship has different size what will be displayed when you place that ship." +
+                         "\n5: Choose wisely...";
         
         Console.WriteLine(message);
     }
 
 
-    public void GetContinue()
+    public void GetEnter()
     {
         string message = "Press the Enter button to continue";
         Console.WriteLine(message);
     }
     
     
-    public void NextShipToPlace(ShipType ship)
+    public void NextShipToPlace(ShipType shipType)
     {
-        switch (ship)
+        switch (shipType)
         {
             case ShipType.Carrier:
-                Console.WriteLine($"You are about to place a {ship}");
-                Console.WriteLine("This ship occupies 3 field(s)");
+                Console.WriteLine($"You are about to place a {shipType}");
+                Console.WriteLine($"This ship occupies {(int)shipType} field(s)");
                 break;
             case ShipType.Cruiser:
-                Console.WriteLine($"You are about to place a {ship}");
-                Console.WriteLine("This ship occupies 2 field(s)");
+                Console.WriteLine($"You are about to place a {shipType}");
+                Console.WriteLine($"This ship occupies {(int)shipType} field(s)");
                 break;
             case ShipType.SpeedBoat:
-                Console.WriteLine($"You are about to place a {ship}");
-                Console.WriteLine("This ship occupies 1 field(s)");
+                Console.WriteLine($"You are about to place a {shipType}");
+                Console.WriteLine($"This ship occupies {(int)shipType} field(s)");
                 break;
             case ShipType.BattleShip:
-                Console.WriteLine($"You are about to place a {ship}");
-                Console.WriteLine("This ship occupies 5 field(s)");
+                Console.WriteLine($"You are about to place a {shipType}");
+                Console.WriteLine($"This ship occupies {(int)shipType} field(s)");
                 break;
             case ShipType.Destroyer:
-                Console.WriteLine($"You are about to place a {ship}");
-                Console.WriteLine("This ship occupies 4 field(s)");
+                Console.WriteLine($"You are about to place a {shipType}");
+                Console.WriteLine($"This ship occupies {(int)shipType} field(s)");
                 break;
                 
         }
     }
 
 
-    public void GetFirstCoordinate()
+    public void GetCoordinate()
     {
-        string message = "Please enter a coordinate from where your ship will start!\n";
+        string message = "Please enter a coordinate!\n";
         Console.WriteLine(message);
     }
     
@@ -159,10 +160,10 @@ public class Display
     }
 
 
-    public void DisplayBorad(Board board)
+    public void DisplayBorad(Board board, string shipMark)
     {
         DrawFirstLine(board);
-        DrawLines(board);
+        DrawLines(board, shipMark);
     }
     
     
@@ -186,7 +187,7 @@ public class Display
         Console.WriteLine();
     }
 
-    private void DrawLines(Board board)
+    private void DrawLines(Board board, string shipMark)
     {
         // 
         string alphabet = "abcdefghijklmnopqrstuvwxyz".ToUpper();
@@ -204,7 +205,7 @@ public class Display
                         Console.Write(" . ");
                         break;
                     case SquareStatus.Ship:
-                        Console.Write(" . ");
+                        Console.Write($" {shipMark} ");
                         break;
                     case SquareStatus.Hit:
                         Console.Write(" H ");

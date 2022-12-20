@@ -2,12 +2,16 @@
 
 public class Input
 {
-    private Validation _validation = new Validation();
-    public string GetName()
+    private int _boardSize;
+    private Display _display = new ();
+    
+    private Validation _validation = new ();
+    public string GetName(int playerNum)
     {
         string name = Console.ReadLine();
-        while (!_validation.ValidateName(name))
+        while (!_validation.ValidateValueIsNotNothing(name))
         {
+            _display.GetName(playerNum);
             name = Console.ReadLine();
         }
         return name;
@@ -16,23 +20,28 @@ public class Input
 
     public int GetBoardSize()
     {
-        int boardSize = Convert.ToInt32(Console.ReadLine());
+        string boardSize = Console.ReadLine();
 
-        while (!_validation.ValidateBoardSize(boardSize))
+        
+        while (!_validation.ValidateValueIsNotNothing(boardSize) || !_validation.ValidateBoardSize(boardSize))
         {
-            boardSize = Convert.ToInt32(Console.ReadLine());
+            _display.GetBoardSize();
+            boardSize = Console.ReadLine();
         }
 
-        return boardSize;
+        _boardSize = Convert.ToInt32(boardSize);
+
+        return Convert.ToInt32(boardSize);
     }
 
 
-    public (int, int) GetMove(int boardSize)
+    public (int, int) GetMove()
     {
         string move = Console.ReadLine();
 
-        while (!_validation.ValidateMove(move, boardSize))
+        while (!_validation.ValidateValueIsNotNothing(move) || !_validation.ValidateMove(move, _boardSize))
         {
+            _display.GetCoordinate();
             move = Console.ReadLine();
         }
         (int, int) convertedMove = ConvertMove(move);
@@ -45,10 +54,28 @@ public class Input
     {
         (int, int) convertedMove;
 
-        convertedMove.Item1 = move[0];
-        convertedMove.Item2 = Convert.ToInt32(move.Remove(0, 1));
+        convertedMove.Item1 = ConvertLetterToBoardIndex(move[0]);
+        convertedMove.Item2 = Convert.ToInt32(move.Remove(0, 1)) - 1;
         
         return convertedMove;
+    }
+
+
+    private int ConvertLetterToBoardIndex(char letter)
+    {
+        string alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+        int result = -1;
+        
+        for (int index = 0; index < alphabet.Length; index++)
+        {
+            if (letter == alphabet[index])
+            {
+                result = index;
+            }
+        }
+
+        return result;
     }
 
 
@@ -56,8 +83,9 @@ public class Input
     {
         string direction = Console.ReadLine();
 
-        while (!_validation.ValidateDirection(direction))
+        while (!_validation.ValidateValueIsNotNothing(direction) || !_validation.ValidateDirection(direction))
         {
+            _display.GetDirection();
             direction = Console.ReadLine();
         }
 
